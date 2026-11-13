@@ -1,4 +1,4 @@
-name: Build Windows EXE
+﻿name: Build Windows EXE
 
 on:
   push:
@@ -58,7 +58,7 @@ jobs:
             if ($LASTEXITCODE -ne 0) { Write-Error "jlink failed"; exit 1 }
             "JRE staged: $((Get-ChildItem $env:JRE_ASSET -Recurse -File | Measure-Object Length -Sum).Sum / 1MB) MB"
 
-      - name: Download ffmpeg win64 (assembly 需要 ffmpeg/ffmpeg-win64.exe)
+      - name: Download ffmpeg win64 (assembly 闇€瑕?ffmpeg/ffmpeg-win64.exe)
         shell: pwsh
         run: |
             New-Item -ItemType Directory -Force ffmpeg | Out-Null
@@ -77,7 +77,7 @@ jobs:
             Copy-Item $exe.FullName ffmpeg\ffmpeg-win64.exe
             "ffmpeg: $((Get-Item ffmpeg\ffmpeg-win64.exe).Length) bytes"
 
-      - name: Placeholder minimal browser dir (assembly 可选项)
+      - name: Placeholder minimal browser dir (assembly 鍙€夐」)
         shell: pwsh
         run: |
             New-Item -ItemType Directory -Force $env:BROWSER_DIR | Out-Null
@@ -85,7 +85,7 @@ jobs:
 
       - name: Build client for Windows (launch4j ctbrec.exe + ctbrec-*-win64-jre.zip)
         shell: cmd
-        run: mvn -B -ntp -e -DskipTests package -am -f ./master -pl :client -Djavafx.platform=win
+        run: mvn -B -ntp -e -DskipTests package -U -am -f ./master -pl :client -Djavafx.platform=win
 
       - name: Collect artifacts
         shell: pwsh
@@ -95,7 +95,7 @@ jobs:
             $exe = Get-ChildItem -Recurse -Filter "ctbrec.exe" -Path client\target | Select-Object -First 1
             if ($zip) { Copy-Item $zip.FullName dist\ ; "ZIP: $($zip.Name) ($([math]::Round($zip.Length/1MB,1)) MB)" } else { Write-Error "win64 zip missing"; exit 1 }
             if ($exe) { Copy-Item $exe.FullName dist\ctbrec-standalone.exe ; "EXE: $($exe.Name)" }
-            # 自校验: zip 里必须有 ctbrec/ctbrec.exe + jre + ffmpeg
+            # 鑷牎楠? zip 閲屽繀椤绘湁 ctbrec/ctbrec.exe + jre + ffmpeg
             Add-Type -AssemblyName System.IO.Compression.FileSystem
             $z = [System.IO.Compression.ZipFile]::OpenRead((Join-Path dist $zip.Name))
             $names = $z.Entries.FullName
@@ -112,7 +112,7 @@ jobs:
           path: dist/*
           if-no-files-found: error
 
-      - name: Publish GitHub Release (tag push 或手动触发)
+      - name: Publish GitHub Release (tag push 鎴栨墜鍔ㄨЕ鍙?
         if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
         uses: softprops/action-gh-release@v2
         with:

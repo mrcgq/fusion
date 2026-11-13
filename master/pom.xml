@@ -14,6 +14,15 @@
         <module>../client</module>
     </modules>
 
+    <repositories>
+        <!-- 仓库自带 file repo: 提供 central 上不存在的 com.iheartradio.m3u8:open-m3u8:0.2.8-CTBREC
+             （CI/新机器只有 central，缺这个 jar 会在 :common 依赖解析处直接失败）-->
+        <repository>
+            <id>ctbrec-local-repo</id>
+            <url>${project.basedir}/../repo</url>
+        </repository>
+    </repositories>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
