@@ -1,0 +1,124 @@
+name: Build Windows EXE
+
+on:
+  push:
+    branches: [ main, master ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      draft:
+        description: 'Create release as draft'
+        required: false
+        default: 'true'
+
+permissions:
+  contents: write
+
+env:
+  JDK_VERSION: '21'
+  JRE_ASSET: jre/jdk_windows
+  BROWSER_DIR: browser/ctbrec-minimal-browser-win32-x64
+  JMODS_DIR: jmods-win
+
+jobs:
+  build-windows-exe:
+    name: Build Windows EXE (launch4j + bundled JRE + ffmpeg)
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ env.JDK_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ env.JDK_VERSION }}
+
+      - name: Cache Maven repository
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2-
+
+      - name: Stage minimal JRE (jlink -> ${{ env.JRE_ASSET }})
+        shell: pwsh
+        run: |
+            $jmods = "$env:JAVA_HOME\jmods"
+            if (-not (Test-Path $jmods)) { Write-Error "no jmods in $env:JAVA_HOME"; exit 1 }
+            New-Item -ItemType Directory -Force jre | Out-Null
+            & "$env:JAVA_HOME\bin\jlink.exe" `
+                --module-path "$jmods" `
+                --add-modules java.base,java.desktop,java.logging,java.net.http,java.sql,java.management,java.naming,java.prefs,java.scripting,java.xml,jdk.crypto.ec,jdk.unsupported `
+                --output "$env:JRE_ASSET" `
+                --strip-debug --no-man-pages --no-header-files --compress=2
+            if ($LASTEXITCODE -ne 0) { Write-Error "jlink failed"; exit 1 }
+            "JRE staged: $((Get-ChildItem $env:JRE_ASSET -Recurse -File | Measure-Object Length -Sum).Sum / 1MB) MB"
+
+      - name: Download ffmpeg win64 (assembly 需要 ffmpeg/ffmpeg-win64.exe)
+        shell: pwsh
+        run: |
+            New-Item -ItemType Directory -Force ffmpeg | Out-Null
+            $ProgressPreference = 'SilentlyContinue'
+            $urls = @(
+              'https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip',
+              'https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-win64-gpl.zip'
+            )
+            $zip = "$env:TEMP\ffmpeg.zip"
+            foreach ($u in $urls) {
+              try { Invoke-WebRequest -Uri $u -OutFile $zip -TimeoutSec 300; break } catch { Write-Host "skip $u" }
+            }
+            if (-not (Test-Path $zip)) { Write-Error "ffmpeg download failed"; exit 1 }
+            Expand-Archive $zip "$env:TEMP\ff" -Force
+            $exe = Get-ChildItem "$env:TEMP\ff" -Recurse -Filter ffmpeg.exe | Select-Object -First 1
+            Copy-Item $exe.FullName ffmpeg\ffmpeg-win64.exe
+            "ffmpeg: $((Get-Item ffmpeg\ffmpeg-win64.exe).Length) bytes"
+
+      - name: Placeholder minimal browser dir (assembly 可选项)
+        shell: pwsh
+        run: |
+            New-Item -ItemType Directory -Force $env:BROWSER_DIR | Out-Null
+            "browser placeholder" | Set-Content "$env:BROWSER_DIR\README.txt"
+
+      - name: Build client for Windows (launch4j ctbrec.exe + ctbrec-*-win64-jre.zip)
+        shell: cmd
+        run: mvn -B -ntp -e -DskipTests package -am -f ./master -pl :client -Djavafx.platform=win
+
+      - name: Collect artifacts
+        shell: pwsh
+        run: |
+            New-Item -ItemType Directory -Force dist | Out-Null
+            $zip = Get-ChildItem -Recurse -Filter "ctbrec-*win64-jre.zip" | Select-Object -First 1
+            $exe = Get-ChildItem -Recurse -Filter "ctbrec.exe" -Path client\target | Select-Object -First 1
+            if ($zip) { Copy-Item $zip.FullName dist\ ; "ZIP: $($zip.Name) ($([math]::Round($zip.Length/1MB,1)) MB)" } else { Write-Error "win64 zip missing"; exit 1 }
+            if ($exe) { Copy-Item $exe.FullName dist\ctbrec-standalone.exe ; "EXE: $($exe.Name)" }
+            # 自校验: zip 里必须有 ctbrec/ctbrec.exe + jre + ffmpeg
+            Add-Type -AssemblyName System.IO.Compression.FileSystem
+            $z = [System.IO.Compression.ZipFile]::OpenRead((Join-Path dist $zip.Name))
+            $names = $z.Entries.FullName
+            $z.Dispose()
+            foreach ($need in 'ctbrec/ctbrec.exe','ctbrec/jre/bin/java.dll','ctbrec/lib/ffmpeg/ffmpeg.exe') {
+              if (-not ($names -contains $need)) { Write-Error "artifact missing in zip: $need"; exit 1 }
+            }
+            "zip structure OK ($($names.Count) entries)"
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ctbrec-windows-exe
+          path: dist/*
+          if-no-files-found: error
+
+      - name: Publish GitHub Release (tag push 或手动触发)
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: CTB Recorder ${{ github.ref_name }} (Windows)
+          draft: ${{ github.event.inputs.draft != 'false' }}
+          prerelease: ${{ contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
+          generate_release_notes: true
+          files: dist/*

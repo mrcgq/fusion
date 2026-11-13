@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6CHNT0DY87"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6CHNT0DY87');
+</script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="CTB Recorder is a free recording software for Chaturbate">
+  <meta name="author" content="">
+
+  <title>CTB Recorder</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+    type="text/css">
+
+  <!-- Plugin CSS -->
+  <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+
+  <!-- Custom styles for this template -->
+  <link href="css/freelancer.min.css" rel="stylesheet">
+
+  <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top"><img
+          src="https://git.ctbrec.com/j62/ctbrec/raw/branch/main/client/src/main/resources/icon64.png" alt="Logo" />CTB
+        Recorder</a>
+      <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button"
+        data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+        aria-label="Toggle navigation">
+        Menu
+        <i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Download</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Screenshots</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#faq">FAQ</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#code">Source Code</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a href="#donate" class="js-scroll-trigger" style="float:right; margin-left: 10px">
+              <img src="img/buymeacoffee/Button/button-red.png" alt="Buy a coffee"
+                style="width:150px; padding-top: 7px" />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="masthead bg-primary text-white text-center">
+    <div class="container">
+      <!--
+        <img class="img-fluid mb-5 d-block mx-auto" src="img/profile.png" alt="">
+        -->
+      <h1 class="text-uppercase mb-0">CTB Recorder</h1>
+      <hr class="star-light">
+      <h2 class="font-weight-light mb-0">A free recording software for different camsites.<br />Currently supported:
+        Amateur.tv, BongaCams, Cam4, CamSoda, Chaturbate, CherryTV, Dreamcam, FC2Live, Flirt4free, LiveJasmin, MV Live,
+        MyFreeCams, SecretFriends, Showup.tv, Streamate, Stripchat, Streamray, WinkTV, XLoveCam</h2>
+    </div>
+  </header>
+
+  <!-- About/Download Section -->
+  <section class="text-secondary mb-0" id="about">
+    <div class="container">
+      <h2 class="text-center text-uppercase text-secondary">About</h2>
+      <hr class="star-dark mb-5">
+      <div class="row">
+        <div class="col-lg-4 ml-auto">
+          <p class="lead">If you ever wanted to record a cam girl show to watch it later or if your favorite model lives
+            in another timezone and is never online when you are, CTB Recorder is the solution for you.</p>
+        </div>
+        <div class="col-lg-4 mr-auto">
+          <p class="lead">CTB Recorder allows you to record any public show on different cam sites. It is very easy to
+            use and set up in minutes. You can even run the recorder on a server and control it with the graphical user
+            interface, so that you never miss a show again.</p>
+        </div>
+      </div>
+      <script>
+        let cnt = 10;
+
+        function downloadCounter(uri) {
+          window.setTimeout(function () {
+            if (cnt === 0) {
+              location.href = uri;
+            } else {
+              cnt--;
+              $('#download-counter').html("Your download starts in... " + cnt);
+              downloadCounter(uri);
+            }
+          }, 1000);
+        }
+
+        function downloadFile(uri) {
+          cnt = 10;
+          $('#download-counter').show();
+          $('#download-counter').html("Your download starts in... " + cnt);
+          downloadCounter(uri);
+        }
+      </script>
+      <div class="row text-center">
+        <div class="col">
+          <a id="download_windows" class="btn btn-xl btn-outline-dark" href="#donate"
+            onclick="downloadFile('https://git.ctbrec.com/j62/ctbrec/releases/download/5.3.3/ctbrec-5.3.3-win64-jre.zip');">
+            <i class="fa fa-windows mr-2"></i>
+            Download for Windows!
+          </a>
+        </div>
+        <div class="col">
+          <a id="download_macos" class="btn btn-xl btn-outline-dark" href="#donate"
+            onclick="downloadFile('https://git.ctbrec.com/j62/ctbrec/releases/download/5.3.3/ctbrec-5.3.3-macos-jre.zip');">
+            <i class="fa fa-apple mr-2"></i>
+            Download for macOS!
+          </a>
+        </div>
+        <div class="col">
+          <a id="download_linux" class="btn btn-xl btn-outline-dark" href="#donate"
+            onclick="downloadFile('https://git.ctbrec.com/j62/ctbrec/releases/download/5.3.3/ctbrec-5.3.3-linux-jre.zip');">
+            <i class="fa fa-linux mr-2"></i>
+            Download for Linux!
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="portfolio bg-primary text-light" id="donate">
+    <div class="container">
+      <h2 class="text-center text-uppercase mb-0">Donate</h2>
+      <hr class="star-light mb-5">
+      <div class="row">
+        <div class="col-lg-10 mx-auto text-center">
+          <p id="download-counter" class="lead text-center" style="display:none"></p>
+          <p class="lead">
+            CTB Recorder is free and open source. (Originally created by 0xboobface). I'm a student and am helping with
+            current development, hosting this site, git(source code repo) and more on servers I am providing for free in
+            my spare time.
+            If you like the software or want to suggest a new feature, please consider buying me a coffee or two.
+            Thanks!
+          </p>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col">
+          <p class="lead">
+            <a href="https://buymeacoffee.com/j62ctbrec" target="_blank">
+              <img src="img/buymeacoffee-round.png" alt="Buy a coffee" style="height: 160px; margin: 20px" />
+            </a><br />
+            <input type="button" value="Buy a coffee"
+              onclick="window.open('https://buymeacoffee.com/j62ctbrec','_blank')">
+          </p>
+        </div>
+
+
+
+        <div class="col">
+          <p class="lead">
+            <a href="https://www.patreon.com/j62ctbrec" target="_blank">
+              <img src="img/patreon-round.png" alt="Patreon" style="height: 160px; margin: 20px" />
+            </a><br />
+            <input type="button" value="Patreon" onclick="window.open('https://www.patreon.com/j62ctbrec','_blank')">
+          </p>
+        </div>
+
+
+
+        <div class="col">
+          <p class="lead">
+            <a href="https://chaturbate.com/in/?track=default&amp;tour=LQps&amp;campaign=97mhH&amp;room=0xb00bface"
+              target="_blank"
+              title="If you buy tokens by using this button, Chaturbate will award me 20% of the tokens' value for sending you over. You get the full tokens and it doesn't cost you any more!">
+              <img src="img/token.png" alt="Buy Chaturbate tokens" />
+            </a><br />
+            <input type="button" value="Buy tokens"
+              onclick="window.open('https://chaturbate.com/in/?track=default&amp;tour=LQps&amp;campaign=97mhH&amp;room=0xb00bface','_blank')"
+              title="If you buy tokens by using this button, Chaturbate will award me 20% of the tokens' value for sending you over. You get the full tokens and it doesn't cost you any more!">
+          </p>
+        </div>
+      </div>
+      <br>
+      <div class="row text-center">
+
+        <!-- Crypto Donation Section -->
+        <div id="crypto-donate" class="lead text-center">
+          <h3>Donate with Cryptocurrency</h3>
+          <p class="lead">Support us by donating with crypto. Thank you for your support!</p>
+          <ul class="list-unstyled">
+            <li><strong>BTC:</strong> bc1q7fvtkx8wklvd4zttsec7sfgxqh9zadk0x236lt</li>
+            <li><strong>ETH:</strong> 0x2e687A5628ff16c8f9624A914C1f727000089C3A</li>
+            <li><strong>Solana:</strong> Z5YwNPkLheSHuaSJjyHhg3L8UxjpJPt5WU6vu4hFsNR</li>
+            <li><strong>Monero:</strong>
+              47tjD1z63wu3FEnDCvWnFaRAZbpDKc3Ys1WCbgzvB2Gg8XbqU8bARpcCC37mWzuWBAeZPu2UGY4TAcYGhb6fptoTR8X9vjc</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+  </section>
+
+  <!-- Screenshots Grid Section -->
+  <section class="portfolio" id="portfolio">
+    <div class="container">
+      <h2 class="text-center text-uppercase mb-0">Screenshots</h2>
+      <hr class="star-dark mb-5">
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-1">
+            <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+              <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+                <i class="fa fa-search-plus fa-3x"></i>
+              </div>
+            </div>
+            <img class="img-fluid" src="img/featured.jpg" alt="">
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-2">
+            <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+              <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+                <i class="fa fa-search-plus fa-3x"></i>
+              </div>
+            </div>
+            <img class="img-fluid" src="img/recording.png" alt="">
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-3">
+            <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+              <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+                <i class="fa fa-search-plus fa-3x"></i>
+              </div>
+            </div>
+            <img class="img-fluid" src="img/followed.jpg" alt="">
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-4">
+            <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+              <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+                <i class="fa fa-search-plus fa-3x"></i>
+              </div>
+            </div>
+            <img class="img-fluid" src="img/recordings.png" alt="">
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-5">
+            <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+              <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+                <i class="fa fa-search-plus fa-3x"></i>
+              </div>
+            </div>
+            <img class="img-fluid" src="img/settings.png" alt="">
+          </a>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-6">
+            <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+              <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+                <i class="fa fa-search-plus fa-3x"></i>
+              </div>
+            </div>
+            <img class="img-fluid" src="img/server.png" alt="">
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="bg-primary text-light">
+    <div class="container">
+      <h2 class="text-center text-uppercase mb-0">FAQ</h2>
+      <hr class="star-light mb-5">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="accordion text-dark" id="accordionExample">
+            <!-- What are .ts files -->
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                  <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    What is a .ts file?
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                  A .ts file is a MPEG transport stream, which contains the video and
+                  audio of the stream. If you want to convert a .ts file into mp4
+                  or mkv you can use a program like <a href="https://handbrake.fr/">Handbrake</a> or <a
+                    href="http://avidemux.sourceforge.net/">Avidemux</a>.
+                </div>
+              </div>
+            </div>
+
+            <!-- How do I run the server -->
+            <div class="card">
+              <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                  <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    How do I run the server?
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                  The archive you downloaded contains a server.bat or server.sh, which can be used to start the server.
+                  On the first start, the server uses a default
+                  configuration. Once you terminate the server by pressing <kbd><kbd>ctrl</kbd> + <kbd>c</kbd></kbd>,
+                  the config is stored in your user home.<br />
+                  On Windows that is <code>C:\Users\{your user name}\AppData\Roaming\ctbrec\server.json</code><br />
+                  On Linux it is <code>~/.config/ctbrec/server.json</code><br />
+                  On macOS it is <code>/Users/{your user name}/Library/Preferences/ctbrec</code><br />
+                  You can open this file in a text editor and change it to your likings. You probably only want to
+                  change <code>httpPort</code> and <code>recordingsDir</code>.
+                  Most of the other stuff is irrelevant since the server and CTB Recorder use the same config file
+                  format.
+                  When the server is running, you can connect to it with CTB Recorder by changing the setting "Record
+                  location" to "Remote".
+                </div>
+              </div>
+            </div>
+
+            <!-- Difference Win JRE -->
+            <div class="card">
+              <div class="card-header" id="headingFour">
+                <h5 class="mb-0">
+                  <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    What is the difference between the Windows download and Windows (no JRE)?
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                <div class="card-body">
+                  If you know what Java is and if you know, that you have Java installed, you can use the (no JRE)
+                  version. Otherwise you are better off using the
+                  standard Windows download, because it comes with all necessary dependencies.
+                </div>
+              </div>
+            </div>
+
+            <!-- Help -->
+            <div class="card">
+              <div class="card-header" id="headingFive">
+                <h5 class="mb-0">
+                  <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    I need help!
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                <div class="card-body">
+                  Go to the project website and <a href="https://git.ctbrec.com/j62/ctbrec/issues">create a new
+                    Issue</a>.
+                </div>
+              </div>
+            </div>
+
+            <!-- Feature request -->
+            <div class="card">
+              <div class="card-header" id="headingSix">
+                <h5 class="mb-0">
+                  <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                    I have a suggestion for a new feature!
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+                <div class="card-body">
+                  Go to the project website and <a href="https://git.ctbrec.com/j62/ctbrec/issues">create a new
+                    Issue</a>.
+                </div>
+              </div>
+            </div>
+
+            <!-- Bug -->
+            <div class="card">
+              <div class="card-header" id="headingSeven">
+                <h5 class="mb-0">
+                  <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                    I found a bug! Where can I report it?
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
+                <div class="card-body">
+                  Go to the project website and <a href="https://git.ctbrec.com/j62/ctbrec/issues">create a new
+                    Issue</a>.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Source Code Section -->
+  <section id="code">
+    <div class="container">
+      <h2 class="text-center text-uppercase text-secondary mb-0">Source Code</h2>
+      <hr class="star-dark mb-5">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+          <p class="lead">
+            CTB Recorder is free and open source. The source code is available on <a
+              href="https://git.ctbrec.com/j62/ctbrec">CTBRec Gitea</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <div class="row">
+        <!--
+          <div class="col-md-4 mb-5 mb-lg-0">
+            <h4 class="text-uppercase mb-4">Location</h4>
+            <p class="lead mb-0">2215 John Daniel Drive
+              <br>Clark, MO 65243</p>
+          </div>
+          <div class="col-md-4 mb-5 mb-lg-0">
+            <h4 class="text-uppercase mb-4">Around the Web</h4>
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-facebook"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-google-plus"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-twitter"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-linkedin"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-dribbble"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h4 class="text-uppercase mb-4">About Freelancer</h4>
+            <p class="lead mb-0">Freelance is a free to use, open source Bootstrap theme created by
+              <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+          </div>
+          -->
+      </div>
+    </div>
+  </footer>
+
+  <!--
+    <div class="copyright py-4 text-center text-white">
+      <div class="container">
+        <small>Copyright &copy; Your Website 2018</small>
+      </div>
+    </div>
+    -->
+
+  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+  <div class="scroll-to-top d-lg-none position-fixed ">
+    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+
+  <!-- Portfolio Modals -->
+
+  <!-- Portfolio Modal 1 -->
+  <div class="portfolio-modal mfp-hide" id="portfolio-modal-1">
+    <div class="portfolio-modal-dialog bg-white">
+      <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+        <i class="fa fa-3x fa-times"></i>
+      </a>
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2 class="text-secondary text-uppercase mb-0">Featured</h2>
+            <hr class="star-dark mb-5">
+            <img class="img-fluid mb-5" src="img/featured.jpg" alt="">
+            <p class="mb-5">You can browse all the different categories like in the browser. The filter input on top
+              helps, to find models quickly.</p>
+            <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+              <i class="fa fa-close"></i>
+              Close</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Portfolio Modal 2 -->
+  <div class="portfolio-modal mfp-hide" id="portfolio-modal-2">
+    <div class="portfolio-modal-dialog bg-white">
+      <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+        <i class="fa fa-3x fa-times"></i>
+      </a>
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2 class="text-secondary text-uppercase mb-0">Recording</h2>
+            <hr class="star-dark mb-5">
+            <img class="img-fluid mb-5" src="img/recording.png" alt="">
+            <p class="mb-5">The Recording overview shows you, which models get recorded. You can also see, which models
+              are currently online.</p>
+            <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+              <i class="fa fa-close"></i>
+              Close</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Portfolio Modal 3 -->
+  <div class="portfolio-modal mfp-hide" id="portfolio-modal-3">
+    <div class="portfolio-modal-dialog bg-white">
+      <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+        <i class="fa fa-3x fa-times"></i>
+      </a>
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2 class="text-secondary text-uppercase mb-0">Start a recording</h2>
+            <hr class="star-dark mb-5">
+            <img class="img-fluid mb-5" src="img/followed.jpg" alt="">
+            <p class="mb-5">Recordings can be started with a simple right-click, as well as models followed or
+              unfollowed.</p>
+            <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+              <i class="fa fa-close"></i>
+              Close</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Portfolio Modal 4 -->
+  <div class="portfolio-modal mfp-hide" id="portfolio-modal-4">
+    <div class="portfolio-modal-dialog bg-white">
+      <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+        <i class="fa fa-3x fa-times"></i>
+      </a>
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2 class="text-secondary text-uppercase mb-0">Recordings</h2>
+            <hr class="star-dark mb-5">
+            <img class="img-fluid mb-5" src="img/recordings.png" alt="">
+            <p class="mb-5">Finished recordings can be played and managed from within CTB Recorder</p>
+            <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+              <i class="fa fa-close"></i>
+              Close</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Portfolio Modal 5 -->
+  <div class="portfolio-modal mfp-hide" id="portfolio-modal-5">
+    <div class="portfolio-modal-dialog bg-white">
+      <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+        <i class="fa fa-3x fa-times"></i>
+      </a>
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2 class="text-secondary text-uppercase mb-0">Settings</h2>
+            <hr class="star-dark mb-5">
+            <img class="img-fluid mb-5" src="img/settings.png" alt="">
+            <p class="mb-5">You can define where the recordings are saved and which media player to use. I recommend <a
+                href="https://mpv.io/" target="_blank">mpv</a>.</p>
+            <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+              <i class="fa fa-close"></i>
+              Close</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Portfolio Modal 6 -->
+  <div class="portfolio-modal mfp-hide" id="portfolio-modal-6">
+    <div class="portfolio-modal-dialog bg-white">
+      <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+        <i class="fa fa-3x fa-times"></i>
+      </a>
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2 class="text-secondary text-uppercase mb-0">Server console</h2>
+            <hr class="star-dark mb-5">
+            <img class="img-fluid mb-5" src="img/server.png" alt="">
+            <p class="mb-5">Log output of the server</p>
+            <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+              <i class="fa fa-close"></i>
+              Close</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <!--
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+    -->
+
+  <!-- Custom scripts for this template -->
+  <script src="js/freelancer.min.js"></script>
+
+  <script>
+    $.ajax({
+      type: 'GET',
+      url: 'https://git.ctbrec.com/api/v1/repos/j62/ctbrec/releases'
+    }).done(function (releases) {
+      let latest = releases[0];
+      let version = latest.tag_name;
+      $('#download_windows').on('click', () => downloadFile(
+        'https://git.ctbrec.com/j62/ctbrec/releases/download/' + version + '/ctbrec-' + version +
+        '-win64-jre.zip'));
+      $('#download_macos').on('click', () => downloadFile(
+        'https://git.ctbrec.com/j62/ctbrec/releases/download/' + version + '/ctbrec-' + version +
+        '-macos-jre.zip'));
+      $('#download_linux').on('click', () => downloadFile(
+        'https://git.ctbrec.com/j62/ctbrec/releases/download/' + version + '/ctbrec-' + version +
+        '-linux-jre.zip'));
+    });
+  </script>
+
+</body>
+
+</html>

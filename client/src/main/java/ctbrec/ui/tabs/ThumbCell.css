@@ -1,0 +1,7 @@
+.thumbcell-selection-background {
+	-fx-fill: -fx-accent;
+} 
+
+.thumbcell-name {
+	-fx-font: normal bold 1.2em 'sans-serif';
+}

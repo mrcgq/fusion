@@ -1,0 +1,11 @@
+/bin/
+/target/
+*~
+*.bak
+*.log
+/ctbrec-tunnel.sh
+/jre/
+/server-local.sh
+ctbrec.pid
+/.idea/
+*.iml

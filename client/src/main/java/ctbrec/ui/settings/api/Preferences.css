@@ -1,0 +1,8 @@
+.settings-group-label {
+	 -fx-font-size: 1.6em;
+}
+
+.setting-highlighted {
+	-fx-border-color: -fx-accent;
+	-fx-border-width: 3;
+}

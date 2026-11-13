@@ -1,0 +1,16 @@
+/bin/
+/target/
+*~
+*.bak
+/*.log
+/ctbrec-tunnel.sh
+/jre/
+/server-local.sh
+/browser/
+/ffmpeg/
+/client.iml
+/.idea/
+
+.settings/
+.classpath
+.project

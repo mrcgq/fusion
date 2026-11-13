@@ -1,0 +1,10 @@
+.idea
+**.log
+.debug-config
+.vscode
+.settings/
+.classpath
+.project
+*/.factorypath
+**/.antlr/
+*.code-workspace

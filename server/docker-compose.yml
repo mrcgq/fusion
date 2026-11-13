@@ -1,0 +1,9 @@
+  version: 3
+  services:
+    ctbrec:
+        ports:
+            - '8080:8080'
+        volumes:
+            - 'ctbrec/config:/root/.config/ctbrec/'
+            - 'ctbrec/video:/root/ctbrec'
+        image: bounty1342/ctbrec

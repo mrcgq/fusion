@@ -1,0 +1,19 @@
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb"
+          xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
+          xmlns:xs="http://www.w3.org/2001/XMLSchema"
+          version="2.1">
+    <bindings schemaLocation="DASH-MPD.xsd" version="1.0">
+        <schemaBindings>
+            <package name="ctbrec.dash"/>
+        </schemaBindings>
+
+        <bindings node="//xs:complexType[@name='SegmentTemplateType']">
+            <bindings node=".//xs:attribute[@name='initialization']">
+                <property name="initializationAttribute"/>
+            </bindings>
+            <bindings node=".//xs:attribute[@name='bitstreamSwitching']">
+                <property name="bitstreamSwitchingAttribute"/>
+            </bindings>
+        </bindings>
+    </bindings>
+</bindings> 

@@ -1,0 +1,10 @@
+Put your statically linked FFmpeg binary here!
+
+For the different platforms copy the following file to this directory;
+Windows: ffmpeg-x.x.x-win64-static\bin\ffmpeg.exe
+Linux: ffmpeg-release-amd64-static/ffmpeg (you can also create a symlink, if FFmpeg is installed already)
+macOS: ffmpeg-x.x.x-macos64-static/bin/ffmpeg
+
+You can download FFmpeg for different platforms here. Make sure to choose the statically linked version: https://ffmpeg.org/download.html
+
+Tested with FFmpeg 4.2.1
