@@ -112,6 +112,14 @@ public class Settings {
     public int minimumResolution = 0;
     public int maximumResolution = 8640;
     public int maximumResolutionPlayer = 0;
+    /**
+     * Always record the highest rung the stream actually exposes. A persisted per model
+     * streamUrlIndex is a position inside a ladder that changes every time a model goes online
+     * (rooms expose different amounts of variants and the top rung comes and goes), so honouring
+     * the raw position silently drops recordings to 360p/450p. The resolution/bitrate limits
+     * above still apply when this is turned off.
+     */
+    public boolean alwaysPreferHighestQuality = true;
     public String mediaPlayer = "/usr/bin/mpv";
     public String mediaPlayerParams = "";
     public String browserOverride = "";
@@ -224,10 +232,20 @@ public class Settings {
     public String xlovecamUsername = "";
     public String xlovecamPassword = "";
     public boolean stripchatVR = false;
-    public String xorKeyV2 = "t0cYOap4Ty1l9jzb";
+    /** V2 XOR 口令（现网实测值，会被 sha256 取前 16 字节做异或）。 */
+    public String xorKeyV2 = "tOcYOap4Ty1l9Jzb";
+    /**
+     * V2 的 pkey（查询串里发的 <b>keyId</b>，不是口令）。master 的 11 行
+     * {@code #EXT-X-MOUFLON:PSCH:v2:<x>} 里只有这一行是真 keyId，用诱饵当 pkey 时
+     * 播放列表照样 200，但段名全解不开。须与 {@link #xorKeyV2} 成对。
+     */
+    public String pkeyV2 = "NTK9aqcLmNFMWrpQ";
     public String v1Key1 = "NTK9aqcLmNFMWrpQ";
-    public String v1Key2 = "t0cYOap4Ty1l9jzb";
+    public String v1Key2 = "tOcYOap4Ty1l9Jzb";
     public boolean stripchatDemangle = true;
+    /** 出口 IP 守卫：IP 变动时自动刷新解析/会话（防拨号/换节点断流）。 */
+    public boolean egressGuardEnabled = true;
+    public int egressGuardIntervalSecs = 60;
     public boolean streamrayRecordGoalShows = false;
     public boolean checkForUpdates = true;
     public int thumbCacheSize = 16;
@@ -237,4 +255,10 @@ public class Settings {
     public boolean checkResolutionByMinSide = false;
     public int restrictBitrate = 0;
     public int configSavingDelayMs = 400;
+
+    /** 是否配置了任意代理（HTTP/SOCKS）。不参与 JSON 序列化。 */
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    public boolean isProxyActive() {
+        return proxyType != null && proxyType != ProxyType.DIRECT;
+    }
 }

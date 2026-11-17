@@ -33,11 +33,43 @@ public class StreamSource implements Comparable<StreamSource> {
     }
 
     /**
-     * First compares the sources by height, if the heights are the same
-     * it compares the bandwidth values
+     * Comparable pixel count of this source. Vertical streams (e.g. 720x960) must not be ranked
+     * below a horizontal one with a bigger height but fewer pixels, so the ranking uses the pixel
+     * count and falls back to a height based scale for sources without width.
+     */
+    public long getQualityScore() {
+        if (height == UNKNOWN || height == ORIGIN) {
+            // sentinel values, only meaningful for the historic comparison path
+            return height;
+        }
+        if (width > 0 && height > 0) {
+            return (long) width * (long) height;
+        }
+        // no width available: approximate with the height, kept below any real pixel count
+        return (long) height * 1000L;
+    }
+
+    /**
+     * Rank two real resolutions by pixel count first, then height, then bandwidth, so that the
+     * last element of a sorted list is always the highest quality variant the stream offers.
+     * Sources carrying the UNKNOWN/ORIGIN sentinel keep the historic comparison untouched, so the
+     * sites that hand out those sentinels are not affected by the pixel based ranking.
      */
     @Override
     public int compareTo(StreamSource o) {
+        boolean bothReal = height != UNKNOWN && o.height != UNKNOWN
+                && height != ORIGIN && o.height != ORIGIN;
+        if (bothReal) {
+            long diff = getQualityScore() - o.getQualityScore();
+            if (diff != 0) {
+                return diff < 0 ? -1 : 1;
+            }
+            int heightDiff = Integer.compare(height, o.height);
+            if (heightDiff != 0) {
+                return heightDiff;
+            }
+            return Integer.compare(bandwidth, o.bandwidth);
+        }
         int heightDiff = height - o.height;
         if (heightDiff != 0 && height != UNKNOWN && o.height != UNKNOWN) {
             return heightDiff;

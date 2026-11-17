@@ -20,7 +20,6 @@ import ctbrec.recorder.download.HttpHeaderFactory;
 import ctbrec.recorder.download.StreamSource;
 import ctbrec.recorder.download.hls.SegmentPlaylist.Segment;
 import ctbrec.sites.Site;
-import ctbrec.sites.stripchat.StripchatPlaylist;
 import okhttp3.Request;
 import okhttp3.Request.Builder;
 import okhttp3.Response;
@@ -300,6 +299,12 @@ public abstract class AbstractHlsDownload extends AbstractDownload {
                 // Stripchat MOUFLON：占位段行重写为真实段 URI（保留 psch/pkey）
                 if (StripchatPlaylist.isStripchatModel(model) && config.getSettings().stripchatDemangle) {
                     body = StripchatPlaylist.rewriteMediaPlaylistBody(body);
+                    if (StripchatPlaylist.undecodedMouflonSegments(body)) {
+                        // the edge served a playlist obfuscated with a key the configured pkey/xorKey
+                        // pairing cannot open; every segment would silently 404 from here on
+                        throw new IOException("MOUFLON segments not decodable for " + model.getName()
+                                + ": pkey/xorKey pairing does not match this stream");
+                    }
                 }
                 if (!body.contains("#EXTINF")) {
                     // no segments, empty playlist
@@ -363,6 +368,8 @@ public abstract class AbstractHlsDownload extends AbstractDownload {
                 URI context = URI.create(segmentPlaylistUrl);
                 mapInfoUri = context.resolve(mapInfoUri).toString();
             }
+            // init/map 段同样继承播放列表鉴权串（Stripchat init.mp4 不带 pkey 会 404）
+            mapInfoUri = StripchatPlaylist.inheritQuery(segmentPlaylistUrl, mapInfoUri);
             lsp.segments.add(new Segment(mapInfoUri, Math.max(0, trackData.getTrackInfo().duration)));
         }
         String uri = trackData.getUri();
@@ -370,10 +377,8 @@ public abstract class AbstractHlsDownload extends AbstractDownload {
             URI context = URI.create(segmentPlaylistUrl);
             uri = context.resolve(uri).toString();
         }
-        // Stripchat: 真实段必须继承播放列表的 psch/pkey 查询参数
-        if (StripchatPlaylist.isStripchatModel(model)) {
-            uri = StripchatPlaylist.inheritQuery(segmentPlaylistUrl, uri);
-        }
+        // 真实段必须继承播放列表的鉴权查询参数（Stripchat: psch/pkey；Chaturbate: session/token）
+        uri = StripchatPlaylist.inheritQuery(segmentPlaylistUrl, uri);
         lsp.totalDuration += trackData.getTrackInfo().duration;
         lsp.segments.add(new Segment(uri, Math.max(0, trackData.getTrackInfo().duration)));
         if (trackData.hasEncryptionData()) {

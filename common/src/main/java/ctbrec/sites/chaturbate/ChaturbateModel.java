@@ -205,19 +205,20 @@ public class ChaturbateModel extends AbstractModel {
         streamInfo = loadStreamInfo();
         MasterPlaylist masterPlaylist = getMasterPlaylist();
         List<StreamSource> sources = new ArrayList<>();
+        // 现网变体是绝对路径 /v1/…/chunklist_*.m3u8?session=<与 edge token 绑定>，必须
+        //  (a) 用 master 的 origin(scheme://host) 解析，不能拼 chaturbate.com；
+        //  (b) 保留 ?session= 查询串，砍了段就 403。
+        java.net.URI masterUri = java.net.URI.create(streamInfo.url);
         for (PlaylistData playlist : masterPlaylist.getPlaylists()) {
             if (playlist.hasStreamInfo()) {
                 StreamSource src = new StreamSource();
                 src.setBandwidth(playlist.getStreamInfo().getBandwidth());
                 src.setHeight(playlist.getStreamInfo().getResolution().height);
                 src.setWidth(playlist.getStreamInfo().getResolution().width);
-                String masterUrl = streamInfo.url;
-                String baseUrl = masterUrl.substring(0, masterUrl.lastIndexOf('/') + 1);
-                String segmentUri = baseUrl + playlist.getUri();
-                src.setMediaPlaylistUrl(segmentUri);
-                if (src.getMediaPlaylistUrl().contains("?")) {
-                    src.setMediaPlaylistUrl(src.getMediaPlaylistUrl().substring(0, src.getMediaPlaylistUrl().lastIndexOf('?')));
-                }
+                String resolved = masterUri.resolve(playlist.getUri()).toString();
+                // 变体只带 session、不带 token 时，把 master 的 token 一并带上（edge 鉴权两样都要）
+                resolved = ctbrec.recorder.download.hls.StripchatPlaylist.inheritQuery(streamInfo.url, resolved);
+                src.setMediaPlaylistUrl(resolved);
                 log.trace("Media playlist {}", src.getMediaPlaylistUrl());
                 sources.add(src);
             }
@@ -335,7 +336,11 @@ public class ChaturbateModel extends AbstractModel {
                     if (playlistData.hasStreamInfo() && playlistData.getStreamInfo().hasResolution()) {
                         int h = playlistData.getStreamInfo().getResolution().height;
                         int w = playlistData.getStreamInfo().getResolution().width;
-                        if (w > res[1]) {
+                        // res[0] is the width and res[1] the height of the current best, so the
+                        // comparison has to be pixel count against pixel count. Comparing the width
+                        // with res[1] made a 428x240 rung (width 428) outrank 960x540 as soon as
+                        // res[1] was still small, and generally mis-ranked vertical ladders.
+                        if ((long) w * (long) h > (long) res[0] * (long) res[1]) {
                             res[0] = w;
                             res[1] = h;
                         }

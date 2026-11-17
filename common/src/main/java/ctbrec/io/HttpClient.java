@@ -43,6 +43,11 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Slf4j
 public abstract class HttpClient {
+    static {
+        // 出口 IP 一变：丢掉可能已被污染/失效的解析结果，重新解析
+        EgressGuard.get().addListener(SecureDns.get()::clearCaches);
+    }
+
     @Getter
     private static final ConnectionPool GLOBAL_HTTP_CONN_POOL = new ConnectionPool(256, 2, TimeUnit.MINUTES);
 
@@ -239,6 +244,9 @@ public abstract class HttpClient {
                 .connectionPool(GLOBAL_HTTP_CONN_POOL)
                 .connectTimeout(config.getSettings().httpTimeout, TimeUnit.MILLISECONDS)
                 .readTimeout(config.getSettings().httpTimeout, TimeUnit.MILLISECONDS)
+                // 抗污染/抗抖动解析：系统结果不可达时用外部 DNS 纠偏（走代理时由代理解析，不受影响）
+                .dns(SecureDns.get())
+                .retryOnConnectionFailure(true)
                 .addNetworkInterceptor(new LoggingInterceptor());
 
         if (cacheSize > 0) {

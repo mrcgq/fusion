@@ -130,13 +130,15 @@ public class HlsdlDownload extends AbstractDownload {
         for (StreamSource streamSource : streamSources) {
             LOG.debug("{} src {}", model.getName(), streamSource);
         }
-        String url = null;
-        if (model.getStreamUrlIndex() >= 0 && model.getStreamUrlIndex() < streamSources.size()) {
-            // TODO don't use the index, but the bandwidth. if the bandwidth does not match, take the closest one
+        String url;
+        if (Config.getInstance().getSettings().alwaysPreferHighestQuality || model.getStreamUrlIndex() < 0) {
+            // same resolution selection as the other download strategies, so that hlsdl does not
+            // fall back to a raw ladder position when the user asked for the best rung
+            url = selectStreamSource(streamSources).getMediaPlaylistUrl();
+        } else if (model.getStreamUrlIndex() < streamSources.size()) {
             LOG.debug("{} selected {}", model.getName(), streamSources.get(model.getStreamUrlIndex()));
             url = streamSources.get(model.getStreamUrlIndex()).getMediaPlaylistUrl();
         } else {
-            // filter out stream resolutions, which are out of range of the configured min and max
             int minRes = Config.getInstance().getSettings().minimumResolution;
             int maxRes = Config.getInstance().getSettings().maximumResolution;
             List<StreamSource> filteredStreamSources = streamSources.stream()

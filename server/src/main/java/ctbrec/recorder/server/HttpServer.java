@@ -101,6 +101,9 @@ public class HttpServer {
 
         onlineMonitor = new OnlineMonitor(recorder, config);
         onlineMonitor.start();
+        var eg = ctbrec.io.EgressGuard.get();
+        eg.configure(config.getSettings().egressGuardEnabled, config.getSettings().egressGuardIntervalSecs * 1000L);
+        eg.start();
         startHttpServer();
     }
 

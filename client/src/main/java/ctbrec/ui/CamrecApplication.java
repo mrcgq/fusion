@@ -129,6 +129,7 @@ public class CamrecApplication extends Application {
         hostServices = getHostServices();
         createRecorder();
         initSites();
+        startEgressGuard();
         startOnlineMonitor();
         createPortraitStore();
         createModelNotesService();
@@ -229,6 +230,13 @@ public class CamrecApplication extends Application {
     private void startOnlineMonitor() {
         onlineMonitor = new OnlineMonitor(recorder, config);
         onlineMonitor.start();
+    }
+
+    /** 出口 IP 守卫：IP 变动时刷新解析/会话，避免拨号/换节点后录制断流。 */
+    private void startEgressGuard() {
+        var eg = ctbrec.io.EgressGuard.get();
+        eg.configure(config.getSettings().egressGuardEnabled, config.getSettings().egressGuardIntervalSecs * 1000L);
+        eg.start();
     }
 
     private void logEnvironment() {
